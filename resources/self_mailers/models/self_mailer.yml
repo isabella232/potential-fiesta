@@ -1,0 +1,49 @@
+allOf:
+  - $ref: "self_mailer_base.yml"
+  - $ref: "../../../shared/models/form_factor/generated.yml"
+  - $ref: "../../../shared/models/form_factor/from_us.yml"
+
+  - type: object
+
+    required:
+      - id
+      - outside_template_id
+      - inside_template_id
+      - outside_template_version_id
+      - inside_template_version_id
+
+    properties:
+      id:
+        $ref: "../attributes/sfm_id.yml"
+
+      outside_template_id:
+        allOf:
+          - $ref: "../../../shared/attributes/model_ids/tmpl_id.yml"
+          - type: string
+            nullable: true
+
+      inside_template_id:
+        allOf:
+          - $ref: "../../../shared/attributes/model_ids/tmpl_id.yml"
+          - type: string
+            nullable: true
+
+      outside_template_version_id:
+        allOf:
+          - $ref: "../../../shared/attributes/model_ids/vrsn_id.yml"
+          - type: string
+            nullable: true
+
+      inside_template_version_id:
+        allOf:
+          - $ref: "../../../shared/attributes/model_ids/vrsn_id.yml"
+          - type: string
+            nullable: true
+
+      object:
+        allOf:
+          - $ref: "../../../shared/attributes/object.yml"
+          - type: string
+            enum:
+              - self_mailer
+            default: self_mailer

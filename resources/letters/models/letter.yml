@@ -1,0 +1,4 @@
+oneOf:
+  - $ref: "certified.yml"
+  - $ref: "registered.yml"
+  - $ref: "no_extra_service.yml"

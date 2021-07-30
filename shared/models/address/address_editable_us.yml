@@ -1,0 +1,13 @@
+allOf:
+  - $ref: "address_editable_base.yml"
+  - $ref: "address_fields_us.yml"
+
+  - type: object
+
+    properties:
+      address_country:
+        type: string
+        enum:
+          - US
+        description: Value is US.
+        default: US

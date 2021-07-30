@@ -1,0 +1,55 @@
+allOf:
+  - $ref: "postcard_base.yml"
+  - $ref: "../../../shared/models/form_factor/generated.yml"
+  - $ref: "../../../shared/models/form_factor/from_us.yml"
+
+  - type: object
+
+    required:
+      - id
+      - front_template_id
+      - back_template_id
+      - front_template_version_id
+      - back_template_version_id
+
+    properties:
+      id:
+        $ref: "../attributes/psc_id.yml"
+
+      front_template_id:
+        oneOf:
+          - $ref: "../../../shared/attributes/model_ids/tmpl_id.yml"
+          - type: string
+            nullable: true
+
+      back_template_id:
+        oneOf:
+          - $ref: "../../../shared/attributes/model_ids/tmpl_id.yml"
+          - type: string
+            nullable: true
+
+      front_template_version_id:
+        oneOf:
+          - $ref: "../../../shared/attributes/model_ids/vrsn_id.yml"
+          - type: string
+            nullable: true
+
+      back_template_version_id:
+        oneOf:
+          - $ref: "../../../shared/attributes/model_ids/vrsn_id.yml"
+          - type: string
+            nullable: true
+
+      tracking_events:
+        type: array
+        items:
+          $ref: "../../../shared/resources/tracking_events/tracking_event_normal.yml"
+        nullable: true
+
+      object:
+        allOf:
+          - $ref: "../../../shared/attributes/object.yml"
+          - type: string
+            enum:
+              - postcard
+            default: postcard

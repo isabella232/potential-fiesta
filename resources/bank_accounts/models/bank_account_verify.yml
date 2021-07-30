@@ -1,0 +1,12 @@
+type: object
+
+required:
+  - amounts
+
+properties:
+  amounts:
+    type: array
+    minItems: 2
+    maxItems: 2
+    items:
+      $ref: "cents.yml"

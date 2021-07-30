@@ -1,0 +1,69 @@
+allOf:
+  - $ref: "check_base.yml"
+  - $ref: "../../../shared/models/form_factor/from_us.yml"
+
+  - type: object
+
+    required:
+      - bank_account
+      - id
+      - amount
+      - to
+      - url
+      - carrier
+
+    properties:
+      id:
+        $ref: "../attributes/chk_id.yml"
+
+      amount:
+        description: The payment amount to be sent in US dollars.
+        type: number
+        format: float
+        multipleOf: 0.01
+        maximum: 1000000
+        exclusiveMaximum: true
+
+      bank_account:
+        $ref: "../../bank_accounts/models/bank_account.yml"
+
+      check_bottom_template_id:
+        $ref: "../../../shared/attributes/model_ids/tmpl_id.yml"
+
+      attachment_template_id:
+        $ref: "../../../shared/attributes/model_ids/tmpl_id.yml"
+
+      check_bottom_template_version_id:
+        $ref: "../../../shared/attributes/model_ids/vrsn_id.yml"
+
+      attachment_template_version_id:
+        $ref: "../../../shared/attributes/model_ids/vrsn_id.yml"
+
+      url:
+        $ref: "../../../shared/attributes/signed_link.yml"
+
+      to:
+        $ref: "../../../shared/models/address/address_us.yml"
+
+      carrier:
+        description: Value is `USPS`.
+        type: string
+        enum:
+          - USPS
+        default: USPS
+
+      thumbnails:
+        type: array
+        items:
+          $ref: "../../../shared/models/thumbnail.yml"
+
+      expected_delivery_date:
+        $ref: "../../../shared/attributes/expected_delivery_date.yml"
+
+      object:
+        allOf:
+          - $ref: "../../../shared/attributes/object.yml"
+          - type: string
+            enum:
+              - check
+            default: check

@@ -1,0 +1,26 @@
+allOf:
+  - $ref: "self_mailer_base.yml"
+  - $ref: "../../../shared/models/form_factor/input_to.yml"
+  - $ref: "../../../shared/models/form_factor/input_from_us.yml"
+
+  - type: object
+
+    required:
+      - to
+      - inside
+      - outside
+
+    properties:
+      inside:
+        oneOf:
+          - $ref: "../../../shared/attributes/html_string.yml"
+          - $ref: "../../../shared/attributes/model_ids/tmpl_id.yml"
+          - $ref: "../../../shared/attributes/remote_file_url.yml"
+          - $ref: "../../../shared/attributes/local_file_path.yml"
+
+      outside:
+        oneOf:
+          - $ref: "../../../shared/attributes/html_string.yml"
+          - $ref: "../../../shared/attributes/model_ids/tmpl_id.yml"
+          - $ref: "../../../shared/attributes/remote_file_url.yml"
+          - $ref: "../../../shared/attributes/local_file_path.yml"

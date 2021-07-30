@@ -1,0 +1,12 @@
+type: string
+
+enum:
+  - usps_first_class
+  - usps_standard
+
+description: |
+  A string designating the mail postage type:
+  * `usps_first_class` - (default)
+  * `usps_standard` - a [cheaper option](https://lob.com/pricing/print-mail#compare) which is less predictable and takes longer to deliver.
+
+default: usps_first_class

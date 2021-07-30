@@ -1,0 +1,48 @@
+name: CD
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.LOBOT_TOKEN }}
+
+      - name: bundle
+        uses: hilary/openapi-cli-bundle-action@v0.0.2
+        with:
+          base-spec: "./Lob-API-public.yml"
+          bundled-spec: "dist/Lob-API-bundled.yml"
+
+      - name: build zero-dependency docs
+        uses: ./actions/redoc
+
+      - name: build postman collection
+        uses: ./actions/contract_tests
+        with:
+          testCommand: "npm run postman"
+        env:
+          LOB_API_TEST_TOKEN: ${{ secrets.LOB_API_TEST_TOKEN }}
+          LOB_API_LIVE_TOKEN: ${{ secrets.LOB_API_LIVE_TOKEN }}
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: push builds to `deployment`
+        shell: bash
+        run: |
+          set -x
+          git config user.name lobot
+          git config user.email lobot@lob.com
+          git update-index -q --refresh
+          git add --force dist/Lob-API-postman.json
+          git add --force dist/Lob-API-bundled.yml
+          git add --force docs/index.html
+          git commit -m "pushing builds" --no-verify
+          git push --force origin ${{ steps.extract_branch.outputs.branch }}:deployment

@@ -1,0 +1,37 @@
+allOf:
+  - $ref: "template_version_writable.yml"
+  - $ref: "../../../../shared/models/lob_base.yml"
+
+  - type: object
+
+    required:
+      - id
+
+    properties:
+      id:
+        $ref: "../../../../shared/attributes/model_ids/vrsn_id.yml"
+
+      suggest_json_editor:
+        type: boolean
+        description: >
+          Used by frontend, true if the template uses advanced features.
+
+      engine:
+        type: string
+        description: >
+          The engine used to combine html template with merge variables.
+            * legacy - Lob's original engine
+            * handlebars
+        enum:
+          - legacy
+          - handlebars
+        nullable: true
+        default: legacy
+
+      object:
+        allOf:
+          - $ref: "../../../../shared/attributes/object.yml"
+          - type: string
+            enum:
+              - version
+            default: version
