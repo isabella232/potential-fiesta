@@ -12,26 +12,28 @@ jobs:
         with:
           token: ${{ secrets.LOBOT_TOKEN }}
 
-      - name: bundle
-        uses: hilary/openapi-cli-bundle-action@v0.0.2
-        with:
-          base-spec: "./Lob-API-public.yml"
-          bundled-spec: "dist/Lob-API-bundled.yml"
+      # - name: bundle
+      #   uses: hilary/openapi-cli-bundle-action@v0.0.2
+      #   with:
+      #     base-spec: "./Lob-API-public.yml"
+      #     bundled-spec: "dist/Lob-API-bundled.yml"
 
       - name: build zero-dependency docs
         shell: bash
+        # env:
+        #   SEGMENT_API_KEY: ${{ secrets.SEGMENT_API_KEY }}
         run: |
           set -x
           npm i redoc-cli --save-dev && npx patch-package
           npm run redoc
 
-      - name: build postman collection
-        uses: ./actions/contract_tests
-        with:
-          testCommand: "npm run postman"
-        env:
-          LOB_API_TEST_TOKEN: ${{ secrets.LOB_API_TEST_TOKEN }}
-          LOB_API_LIVE_TOKEN: ${{ secrets.LOB_API_LIVE_TOKEN }}
+      # - name: build postman collection
+      #   uses: ./actions/contract_tests
+      #   with:
+      #     testCommand: "npm run postman"
+      #   env:
+      #     LOB_API_TEST_TOKEN: ${{ secrets.LOB_API_TEST_TOKEN }}
+      #     LOB_API_LIVE_TOKEN: ${{ secrets.LOB_API_LIVE_TOKEN }}
 
       - name: Extract branch name
         shell: bash
@@ -45,8 +47,6 @@ jobs:
           git config user.name lobot
           git config user.email lobot@lob.com
           git update-index -q --refresh
-          git add --force dist/Lob-API-postman.json
-          git add --force dist/Lob-API-bundled.yml
           git add --force docs/index.html
           git commit -m "pushing builds" --no-verify
           git push --force origin ${{ steps.extract_branch.outputs.branch }}:deployment
