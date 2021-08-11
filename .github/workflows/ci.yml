@@ -26,12 +26,12 @@ jobs:
       #     repo_token: ${{ github.token }}
       #     event_name: ${{ github.event_name }}
 
-      # - name: run contract tests
-      #   uses: ./actions/contract_tests
-      #   continue-on-error: true
-      #   env:
-      #     LOB_API_TEST_TOKEN: ${{ secrets.LOB_API_TEST_TOKEN }}
-      #     LOB_API_LIVE_TOKEN: ${{ secrets.LOB_API_LIVE_TOKEN }}
+      - name: run contract tests
+        uses: ./actions/contract_tests
+        continue-on-error: true
+        env:
+          LOB_API_TEST_TOKEN: ${{ secrets.LOB_API_TEST_TOKEN }}
+          LOB_API_LIVE_TOKEN: ${{ secrets.LOB_API_LIVE_TOKEN }}
 
       - name: invoke build
         if: ${{ github.ref == 'refs/heads/main' }}
